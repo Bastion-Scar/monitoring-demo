@@ -1,0 +1,10 @@
+# Проверяем, открывается ли страница health
+modules:
+  http_2xx:
+    prober: http
+    timeout: 5s #После того, как спустся 15сек прометей дернул API у него есть 5сек на обработку запроса, если спустя 5сек не ответит - алерт
+    http:
+      valid_http_versions: ["HTTP/1.1", "HTTP/2"]
+      method: GET
+      headers:
+        User-Agent: blackbox
