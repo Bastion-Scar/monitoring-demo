@@ -1,0 +1,21 @@
+groups:
+- name: blackbox-alerts
+  rules:
+  # Если сайт упадет - сразу же алерт в прометей и в телеграм
+  - alert: SiteDown
+    expr: probe_success{instance="http://app:8080/health"} == 0
+    for: 10s
+    labels:
+      severity: critical
+    annotations:
+      summary: "Сайт {{ $labels.instance }} упал"
+      description: "Сайт упал"
+
+  #Если долго грузит(дольше 1/2 секунды) - алерт-предупреждение в телеграм и в прометей
+  - alert: HighLatenecy
+    expr: histogram_quantile(0.95, rate(probe_http_duration_seconds_bucket[5m])) > 0.5
+    for: 0s
+    labels:
+      severity: warning
+    annotations:
+      summary: "Высокая задержка (95-й перцентиль >0.5s)"
