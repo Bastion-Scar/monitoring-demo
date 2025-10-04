@@ -1,7 +1,7 @@
 package storage_test
 
 import (
-	"awesomeProject13/internal/storage"
+	"monitoring-demo/internal/storage"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
