@@ -5,7 +5,6 @@ import (
 	"os"
 	"time"
 
-	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 ) //
@@ -27,11 +26,6 @@ type URLMapping struct {
 }
 
 func InitDB() *gorm.DB {
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatal("Ошибка загрузки .env файла")
-	}
-
 	dsn := os.Getenv("DSN")
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
