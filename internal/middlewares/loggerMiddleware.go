@@ -3,6 +3,7 @@ package middlewares
 import (
 	"monitoring-demo/internal/storage"
 	"monitoring-demo/models"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -19,7 +20,11 @@ func LoggerMiddleware(logger *zap.Logger) gin.HandlerFunc {
 		status := c.Writer.Status()
 		clientIP := c.ClientIP()
 		requestURI := c.Request.RequestURI
-		path := c.Request.URL.Path
+		path := strings.TrimSuffix(c.Request.URL.Path, "/")
+
+		if path == "/health" || strings.Contains(path, "/health") {
+			return
+		}
 
 		logger.Info("Request Info",
 			zap.Int("status", status),
