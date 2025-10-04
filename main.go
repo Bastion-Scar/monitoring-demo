@@ -10,8 +10,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//TODO: ДОПОЛНИТЕЛЬНО написать Dockerfile и Docker-compose
-
 func main() {
 	zapLogger := logger.Logger()
 	initStorage := storage.NewMySQLStorage()
@@ -22,6 +20,11 @@ func main() {
 
 	r.Use(middlewares.LoggerMiddleware(zapLogger))
 	r.Use(gin.Recovery())
+
+	r.GET("/health", func(c *gin.Context) {
+		c.JSON(200, gin.H{"status": "ok"})
+	})
+
 	r.POST("/shorten", func(c *gin.Context) {
 		userService.Save(c)
 	})
