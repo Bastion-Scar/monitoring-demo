@@ -1,0 +1,17 @@
+global:
+  resolve_timeout: 5m
+
+route:
+#Правила для отправки
+  receiver: telegram 
+  repeat_interval: 30s #Каждые 30сек алерт по надобности
+  group_interval: 30s #Ждет 30 секунд и если много алертов собирает их 30сек и после объеденит их в одно сообщение
+  group_wait: 10s #Если пришел алерт - ждет 10 сек, чтоб зафиксировать, а вдруг есть еще точно такие же, чтоб сразу отправить их ОДНИМ сообщением
+
+#Бот отправит в мою личку алерт
+receivers:
+  - name: telegram
+    telegram_configs:
+      - bot_token: ${BOT_TOKEN}
+        chat_id: ${CHAT_ID}
+        send_resolved: true
