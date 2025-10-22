@@ -15,7 +15,7 @@
 1. git clone https://github.com/Bastion-Scar/monitoring-demo
 2. cd monitoring-demo/infrastructure
 3. docker compose build
-4. .
+4. ../setup.sh 
 
 ## Сервисы: 
 
